@@ -47,6 +47,11 @@ contract DSCEngine {
 
     error DSCEngine__NeedsMoreThanZero();
 
+    ///////////////////
+    // State Variables
+    ///////////////////
+    mapping(address collateralToken => address priceFeed) private s_priceFeeds;
+
     //////////////
     // Modifiers
     //////////////
@@ -62,7 +67,10 @@ contract DSCEngine {
     // Functions
     //////////////
 
-    constructor() {}
+    constructor(
+        address[] memory tokenAddresses,
+        address[] memory priceFeedAddresses
+    ) {}
 
     // depositCollateralAndMintDsc
     function depositCollateralAndMintDsc() external {}
