@@ -44,6 +44,7 @@ contract DSCEngine {
     //////////////
     // Errors
     //////////////
+    error DSCEngine__TokenAddressesAndPriceFeedAddressesAmountsDontMatch();
 
     error DSCEngine__NeedsMoreThanZero();
 
@@ -70,7 +71,15 @@ contract DSCEngine {
     constructor(
         address[] memory tokenAddresses,
         address[] memory priceFeedAddresses
-    ) {}
+    ) {
+        if (tokenAddresses.length != priceFeedAddresses.length) {
+            revert DSCEngine__TokenAddressesAndPriceFeedAddressesAmountsDontMatch();
+        }
+
+        for (uint256 i = 0; i < tokenAddresses.length; i++) {
+            s_priceFeeds[tokenAddresses[i]] = priceFeedAddresses[i];
+        }
+    }
 
     // depositCollateralAndMintDsc
     function depositCollateralAndMintDsc() external {}
